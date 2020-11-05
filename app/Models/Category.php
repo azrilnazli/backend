@@ -15,7 +15,7 @@ class Category extends Model
     ];
 
     /**
-     * User HasMany Videos
+     * Category HasMany Videos
      */
     public function videos()
     {

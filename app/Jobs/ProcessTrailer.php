@@ -37,7 +37,8 @@ class ProcessTrailer implements ShouldQueue
         Log::info("Video Encoding Start : $this->id");
 
   
-        $encoder = app_path() . '/bin/HandBrakeCLI';
+        //$encoder = app_path() . '/bin/HandBrakeCLI';
+        $encoder = config('settings.HandBrakeCLI');
         $video_path = $video = public_path() . '/uploads/' . $this->id . '/trailer';
         $video = $video_path . '/original.mp4';
 

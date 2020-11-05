@@ -25,7 +25,7 @@ class Video extends Model
     }
 
     /**
-     * Get the user that owns the video.
+     * Get the Category that owns the Video.
      */
     public function category()
     {

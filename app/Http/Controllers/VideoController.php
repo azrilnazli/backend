@@ -31,7 +31,7 @@ class VideoController extends Controller
 
 
         
-        $data = Video::with('category')->paginate(10)->setPath('videos');
+        $data = Video::orderBy('id','desc')->with('category')->paginate(10)->setPath('videos');
         //$data = Video::all()->paginate('10');
         return view('admin.videos.index',compact('data'));
     }
@@ -171,6 +171,8 @@ class VideoController extends Controller
             $file =  $request['file-1'];
             $path = public_path().'/uploads/' . $id;
             $file->move($path . '/images/', 'file-1');
+           # $file->delete($path . '/images/file-1.png');
+           # $file->delete($path . '/images/file-1-small.png');
             Image::make( $path . '/images/file-1')->fit(400, 600)->save( $path . '/images/file-1.png');
             Image::make( $path . '/images/file-1')->fit(200, 300)->save( $path . '/images/file-1-small.png');
 
@@ -181,8 +183,10 @@ class VideoController extends Controller
             $file =  $request['file-2'];
             $path = public_path().'/uploads/' . $id;
             $file->move($path . '/images/', 'file-2');
-            Image::make( $path . '/images/file-2')->resize(1920, 1080)->save( $path . '/images/file-2.png');
-            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/file-2-small.png');
+           # $file->delete($path . '/images/file-2.png');
+           # $file->delete($path . '/images/file-2-small.png');
+            Image::make( $path . '/images/file-2')->fit(1920, 1080)->save( $path . '/images/file-2.png');
+            Image::make( $path . '/images/file-2')->fit(640, 360)->save( $path . '/images/file-2-small.png');
         }
 
         return redirect()->route('videos.poster', ['id' => $id])->with('success','Image upload success');
