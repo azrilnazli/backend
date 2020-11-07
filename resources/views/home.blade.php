@@ -22,6 +22,10 @@
                         <div class="btn btn-primary btn-lg">
                           You have Manager Access
                         </div>
+                    @elsecan('isEditor')
+                    <div class="btn btn-primary btn-lg">
+                        You have Editor Access
+                    </div>
                     @else
                         <div class="btn btn-info btn-lg">
                           You have User Access

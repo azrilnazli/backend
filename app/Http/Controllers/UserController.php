@@ -15,7 +15,8 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
+        $this->middleware('can:isAdmin');
     }    
 
     public function index()
@@ -32,7 +33,8 @@ class UserController extends Controller
         //$results = Post::where('title', 'like', "{$keyword}%")->get()
         
         $data = User::where([['name', 'like', "{$query}%"]])
-        ->paginate(10)->setPath('users');
+                ->orWhere([['email', 'like', "{$query}%"]])
+                ->paginate(10)->setPath('users');
         
         return view('admin.users.index',compact(['data']));
     }
@@ -55,7 +57,7 @@ class UserController extends Controller
     {
         //dd($request['role']);
         $request->validate([
-            'role' => ['in:admin,manager,user'], 
+            'role' => ['in:admin,manager,user,editor'], 
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -88,7 +90,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-         'role' => ['in:admin,manager,user'], 
+         'role' => ['in:admin,manager,user,editor'], 
          'name'     => 'required',
          'email'    => 'required|email',
         ]);

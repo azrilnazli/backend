@@ -11,13 +11,14 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('can:isEditor');
     }    
 
     public function index()
     {
         $data = Category::orderBy('id','desc')->paginate(10)->setPath('categories');
         return view('admin.categories.index',compact(['data']));
+ 
     }
 
     public function search(Request $request)

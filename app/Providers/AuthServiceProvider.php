@@ -24,6 +24,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::before(function ($user, $ability) {
+            if ( $user->role == 'admin') {
+                return true;
+            }
+        });
    
         /* define a admin user role */
         Gate::define('isAdmin', function($user) {
@@ -33,6 +39,11 @@ class AuthServiceProvider extends ServiceProvider
         /* define a manager user role */
         Gate::define('isManager', function($user) {
             return $user->role == 'manager';
+        });
+
+        /* define a editor user role */
+        Gate::define('isEditor', function($user) {
+            return $user->role == 'editor';
         });
       
         /* define a user role */
