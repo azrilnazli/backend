@@ -62,4 +62,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Video');
     }    
+
+   /**
+     * User's role
+    */
+
+    public function hasRole($role)
+    {
+        return User::where('role', $role)->get();
+    }
 }

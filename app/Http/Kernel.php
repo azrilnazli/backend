@@ -62,5 +62,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        // https://stackoverflow.com/questions/43901719/laravel-middleware-with-multiple-roles/43902371
+        //'role' => \App\Http\Middleware\Role::class,
     ];
 }
