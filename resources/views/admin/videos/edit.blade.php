@@ -98,9 +98,11 @@
                     <dt class="col-sm-3">Publish now ?</dt>
                     <dd class="col-sm-9">
                         <div class="form-group row">
-                            <div class="col-md-1">
-    
-                                    <input @if($data->is_published == 1) checked @endif id="is_published" type="checkbox" class="@error('is_published') is-invalid @enderror" name="is_published" value="1" >
+                        
+                            <div class="col-md-4">
+  
+                                    <input  @if ($data->is_processing == 1 ) disabled @endif @if($data->is_published == 1) checked @endif id="is_published" type="checkbox" class="@error('is_published') is-invalid @enderror" name="is_published" value="1" >
+
 
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
@@ -112,7 +114,15 @@
                     </dd>                    
 
                 </dl>
-                <dt class="col-sm-3"></dt> 
+                <dt class="col-sm-3">
+                
+                @if ($data->is_processing == 1 )          
+                <p class="alert alert-danger">Video is still processing</p>
+                @else            
+                <p class="alert alert-success">Video is ready for publishing</p>
+                @endif
+                
+                </dt> 
                 <dd class="col-sm-9">
                     <button type="submit" class="btn btn-primary" >
                         Update
@@ -125,7 +135,7 @@
                     <a href="{{ route('videos.show', $data->id  )}}" class="float-left btn btn-primary">	&laquo; Show Assets</a>
                     <a href="{{ route('videos.trailer', $data->id  )}}" class="float-right btn btn-primary">	Trailer &raquo;</a>
                 </div>
-            </div>    
+            </div> 
         </div>
     </div>
        
