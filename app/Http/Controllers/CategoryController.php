@@ -11,6 +11,13 @@ class CategoryController extends Controller
 
     public function __construct()
     {
+
+       // $this->middleware(function ($request, $next) {      
+       //     if(auth()->user()->hasRole('frontuser')){
+       //         return redirect()->route('home')->withFlashMessage('You are not authorized to access that page.')->withFlashType('warning');
+       //     }
+       //     return $next($request);
+       // });
         $this->middleware('can:isEditor');
     }    
 

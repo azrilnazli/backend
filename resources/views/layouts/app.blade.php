@@ -65,17 +65,17 @@
                                     @endCan
 
                                     
-                                    @canAny('isEditor')
+                                    @can('isEditor')
                                     <a class="dropdown-item" href="{{ route('categories.index') }}">
                                         {{ __('Categories') }}
                                     </a>
-                                    @endCanAny
+                                    @endcan
                                     
-                                    @canAny('isEditor')
+                                    @can('isEditor')
                                     <a class="dropdown-item" href="{{ route('videos.index') }}">
                                         {{ __('Videos') }}
                                     </a>
-                                    @endCanAny
+                                    @endcan
                                     
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
