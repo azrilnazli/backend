@@ -85,5 +85,9 @@ class ProcessVideo implements ShouldQueue
         // update videos.is_ready = 1
         $data['is_ready'] = 1;
         Video::where('id',$this->id)->update( $data);
+
+        // update videos.is_ready = 1
+        $data['is_processing'] = 0;
+        Video::where('id',$this->id)->update( $data);
     }
 }
