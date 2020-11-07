@@ -45,7 +45,7 @@ class ProcessVideo implements ShouldQueue
         // Start the clock time in seconds 
         $start_time = microtime(true);
 
-        $encoder = app_path() . '/bin/HandBrakeCLI';
+        $encoder = config('settings.HandBrakeCLI');
         $video_path = $video = public_path() . '/uploads/' . $this->id . '/videos';
         $video = $video_path . '/original.mp4';
 

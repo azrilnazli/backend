@@ -57,7 +57,7 @@
                                     "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
                                     "sources":[
                                                 {
-                                                    "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/trailer/smil:stream.smil/playlist.m3u8"
+                                                    "sourceURL":"{{ config('settings.streaming_server') . $data->id }}/trailer/smil:stream.smil/playlist.m3u8"
                                                 },
                                             ],
 
