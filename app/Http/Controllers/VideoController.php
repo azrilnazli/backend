@@ -279,6 +279,26 @@ class VideoController extends Controller
         return redirect()->route('videos.video', ['id' => $id])->with('success','Video upload success');
     }
 
+    public function upload()
+    {
+        //echo 'test';
+        //return view('admin.videos.upload');    
+    }
+
+    public function store_upload(Request $request)
+    {
+
+        // upload poster
+        if($request->hasFile('file-1'))
+        {
+            $file =  $request['file-1'];
+            $path = public_path().'/uploads/';
+            $file->move($path . '/upload');
+            //Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
+        }
+
+    }
+
     private function getCategories()
     {
         return Category::orderBy('title','ASC')->pluck('title', 'id');
