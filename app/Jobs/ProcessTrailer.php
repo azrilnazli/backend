@@ -41,25 +41,26 @@ class ProcessTrailer implements ShouldQueue
         $encoder = config('settings.HandBrakeCLI');
         $video_path = $video = public_path() . '/uploads/' . $this->id . '/trailer';
         $video = $video_path . '/original.mp4';
+        
 
         // encode for 1080p
-        $command = "$encoder -i $video --preset=\"Vimeo YouTube HQ 1080p60\" --output $video_path/1080p.mp4";
+        $command = "$encoder -i $video  --preset=\"Vimeo YouTube HQ 1080p60\" --output $video_path/1080p.mp4  2>$video_path/1080p.log";
         shell_exec($command);
-        Log::info("1080p done : $$this->id");
+        Log::info("1080p done : $this->id");
 
-        $command = "$encoder -i $video --preset=\"Vimeo YouTube HQ 720p60\" --output $video_path/720p.mp4";
+        $command = "$encoder -i $video  --preset=\"Vimeo YouTube HQ 720p60\" --output $video_path/720p.mp4 2>$video_path/720p.log";
         shell_exec($command);
-        Log::info("720p done : $$this->id");
+        Log::info("720p done : $this->id");
 
-        $command = "$encoder -i $video --preset=\"Android 480p30\" --output $video_path/480p.mp4";
+        $command = "$encoder -i $video  --preset=\"Android 480p30\" --output $video_path/480p.mp4 2>$video_path/480p.log";
         shell_exec($command);
-        Log::info("480p done : $$this->id");
+        Log::info("480p done : $this->id");
 
-        $command = "$encoder -i $video --preset=\"Apple 240p30\" --output $video_path/240p.mp4";
+        $command = "$encoder -i $video  --preset=\"Apple 240p30\" --output $video_path/240p.mp4 2>$video_path/240p.log";
         shell_exec($command);
-        Log::info("240p done : $$this->id");
+        Log::info("240p done : $this->id");
 
-        Log::info("Video Encoding End : $$this->id");
+        Log::info("Video Encoding End : $this->id");
 
         // copy smil from public_app()/src/stream.smil to video folder
         $smil = public_path() . '/src/stream.smil';

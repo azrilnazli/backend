@@ -7,16 +7,18 @@
 @endsection
 
 @section('script')
-    $(document).ready(function(){
+    var $j = jQuery.noConflict();
 
-        $('input[type=file]').change(function(){
-            $(this).simpleUpload("{{ route('videos.store_trailer_ajax', $data->id) }}", {
+    $j(document).ready(function(){
+
+        $j('input[type=file]').change(function(){
+            $j(this).simpleUpload("{{ route('videos.store_trailer_ajax', $data->id) }}", {
 
                 start: function(file){
                     //upload started
-                    $('#filename').html(file.name);
-                    $('#progress').html("");
-                    $('#progressBar').width(0);
+                    $j('#filename').html(file.name);
+                    $j('#progress').html("");
+                    $j('#progressBar').width(0);
                 },
 
 
@@ -27,20 +29,20 @@
 
                 progress: function(progress){
                     //received progress
-                    $('#progress').html("Progress: " + Math.round(progress) + "%");
-                    $('#progressBar').width(progress + "%");
-                    $("#progress-bar").attr("style",  "width:" + Math.round(progress) +  "%;" );
+                    $j('#progress').html("Progress: " + Math.round(progress) + "%");
+                    $j('#progressBar').width(progress + "%");
+                    $j("#progress-bar").attr("style",  "width:" + Math.round(progress) +  "%;" );
                 },
 
                 success: function(data){
 
                     if(data.status == 'success'){
-                        $('#progress').html("<span class=\"text-success\"><i class=\"fas fa-check\"></i>&nbsp;" + data.message + "</span>");
+                        $j('#progress').html("<span class=\"text-success\"><i class=\"fas fa-check\"></i>&nbsp;" + data.message + "</span>");
                     }else if(data.status == 'error'){
-                        $('#progress').html("<span class=\"text-danger\"><i class=\"fa fa-exclamation-triangle\"></i>&nbsp;" + data.message + "</span>");
+                        $j('#progress').html("<span class=\"text-danger\"><i class=\"fa fa-exclamation-triangle\"></i>&nbsp;" + data.message.file + "</span>");
                     }
                     
-                    console.log(data);
+                    console.log(data.message.file);
                     
                    
                 },
@@ -48,8 +50,10 @@
                 error: function(error){
                     //upload failed
                     //$('#progress').html("Failure!<br>" + error.name + ": " + error.message);
-                    console.log(data);
-                    $('#progress').html("Trailer upload failed!");
+                   // console.log(data.message);
+             
+     
+                    $j('#progress').html("Trailer upload failed!");
                 }
 
             });
@@ -98,14 +102,16 @@
      
              
 
+
                 <div class="col card">
               
                     <div class="card-body col col-6">
-
                        
+                        @if (file_exists(public_path('/uploads/' .$data->id. '/trailer/original.mp4')))
                         
-                       
-                       
+                        @else
+                            <img class="img img-thumbnail mb-2" src="/src/poster/trailer.png" />
+                        @endif
                         <div class="progress">
                             <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;"  aria-valuemin="0" aria-valuemax="100">
                                 <span id="filename"></span>

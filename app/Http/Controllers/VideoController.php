@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Auth;
 use File;
 use Image;
+use Validator;
 
 class VideoController extends Controller
 {
@@ -210,25 +211,52 @@ class VideoController extends Controller
         // upload poster
         if($request->hasFile('file'))
         {
+
+            $validator = Validator::make($request->all(), [
+                'file' => ['mimes:mov,mp4,m4v'],
+            ]);
+            
+            if ($validator->fails()) 
+            {
+                $data = [
+                    'status' => 'error',
+                    //'message' => $validator->getMessageBag()->toArray(),
+                    'message' => array_map(
+                                            function($fieldErrors) 
+                                            { 
+                                                return $fieldErrors[0];
+                                            }, 
+                                            $validator->getMessageBag()->toArray()
+                                        ),
+                ];
+
+                //return response()->json($data); // Return OK to user's browser
+            } else {
+
+                $data = [
+                    'status' => 'success',
+                    'message' => 'success ',
+                ];
+
+                //return response()->json($data); // Return OK to user's browser
+            }
+
             $file =  $request['file'];
-            $path = public_path().'/uploads/';
-            $file->move( $path );
-            //Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
+            $mime = $file->getMimeType();
+            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
+            {
+           
+                $path = public_path().'/uploads/' . $id;
+                $file->move($path . '/trailer/', 'original.mp4');
+
+                # dispatch job here
+                ProcessTrailer::dispatch($id);
+            }
+
+
+            return response()->json($data); // Return OK to user's browser
+           
         }
-
-        //dd($request);
-        //return response([
-        //    //'success_url'=> redirect()->intended('/')->getTargetUrl(),
-       //     'success' => true,
-       //     'message'=>'success'
-       // ]);
-
-        $data = [
-            'status' => 'success',
-            'message' => 'hello world',
-        ];
-        return response()->json($data); // Return OK to user's browser
-
     }
 
     public function store_trailer(Request $request, $id)

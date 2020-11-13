@@ -44,3 +44,5 @@ Route::post('/videos/store_upload', [App\Http\Controllers\VideoController::class
 
 Route::resource('categories','App\Http\Controllers\CategoryController');
 Route::post('/categories/search', [App\Http\Controllers\CategoryController::class, 'search'])->name('categories.search');
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->middleware('auth');
