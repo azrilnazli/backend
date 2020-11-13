@@ -193,19 +193,21 @@ class VideoController extends Controller
 
     public function trailer($id)
     {
+        //$data = Video::find($id);
+        //return view('admin.videos.trailer',compact(['data']));
         $data = Video::find($id);
         return view('admin.videos.trailer',compact(['data']));
     }
 
 
-    public function upload($id)
-    {
-        $data = Video::find($id);
-        return view('admin.videos.upload',compact(['data']));
-    }
+    //public function upload($id)
+    //{
+    //    $data = Video::find($id);
+    //    return view('admin.videos.upload',compact(['data']));
+    //}
 
 
-    public function store_trailer_ajax(Request $request, $id)
+    public function store_trailer_video(Request $request, $id)
     {
 
         // upload poster
@@ -247,6 +249,7 @@ class VideoController extends Controller
             {
            
                 $path = public_path().'/uploads/' . $id;
+                File::deleteDirectory(public_path('uploads/'. $id . '/trailer'));
                 $file->move($path . '/trailer/', 'original.mp4');
 
                 # dispatch job here
@@ -259,30 +262,13 @@ class VideoController extends Controller
         }
     }
 
-    public function store_trailer(Request $request, $id)
+    public function store_trailer_poster(Request $request, $id)
     {
  
         $request->validate([
-            'file-1' => ['mimes:mov,mp4,m4v'],
             'file-2' => ['mimes:png,jpg,jpeg'],
         ]);
         
-
-        // upload trailer
-        if($request->hasFile('file-1')){
-            $file =  $request['file-1'];
-            $mime = $file->getMimeType();
-            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
-            {
-           
-                $path = public_path().'/uploads/' . $id;
-                $file->move($path . '/trailer/', 'original.mp4');
-
-                # dispatch job here
-                ProcessTrailer::dispatch($id);
-            }
-        }
-
         // upload poster
         if($request->hasFile('file-2'))
         {
@@ -293,7 +279,7 @@ class VideoController extends Controller
         }
 
 
-        return redirect()->route('videos.trailer', ['id' => $id])->with('success','Trailer upload success');
+        return redirect()->route('videos.trailer', ['id' => $id])->with('success','Trailer poster upload success');
     }
 
     public function video($id)
@@ -302,30 +288,72 @@ class VideoController extends Controller
         return view('admin.videos.video',compact(['data']));
     }
 
-
     public function store_video(Request $request, $id)
     {
- 
-        $request->validate([
-            'file-1' => ['mimes:mov,mp4,m4v'],
-            'file-2' => ['mimes:png,jpg,jpeg'],
-        ]);
-        
 
-        // upload trailer
-        if($request->hasFile('file-1')){
-            $file =  $request['file-1'];
+        // upload poster
+        if($request->hasFile('file'))
+        {
+
+            $validator = Validator::make($request->all(), [
+                'file' => ['mimes:mov,mp4,m4v'],
+            ]);
+            
+            if ($validator->fails()) 
+            {
+                $data = [
+                    'status' => 'error',
+                    //'message' => $validator->getMessageBag()->toArray(),
+                    'message' => array_map(
+                                            function($fieldErrors) 
+                                            { 
+                                                return $fieldErrors[0];
+                                            }, 
+                                            $validator->getMessageBag()->toArray()
+                                        ),
+                ];
+
+                //return response()->json($data); // Return OK to user's browser
+            } else {
+
+                $data = [
+                    'status' => 'success',
+                    'message' => 'success ',
+                ];
+
+                //return response()->json($data); // Return OK to user's browser
+            }
+
+            $file =  $request['file'];
             $mime = $file->getMimeType();
             if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
             {
            
                 $path = public_path().'/uploads/' . $id;
+                # delete existing folder
+                File::deleteDirectory(public_path('uploads/'. $id . '/videos'));
+                
                 $file->move($path . '/videos/', 'original.mp4');
+
+                
+
 
                 # dispatch job here
                 ProcessVideo::dispatch($id);
             }
+            return response()->json($data); // Return OK to user's browser
+           
         }
+    }
+
+
+    public function store_video_poster(Request $request, $id)
+    {
+ 
+        $request->validate([
+            'file-2' => ['mimes:png,jpg,jpeg'],
+        ]);
+        
 
         // upload poster
         if($request->hasFile('file-2'))
@@ -340,19 +368,6 @@ class VideoController extends Controller
 
 
 
-    public function store_upload(Request $request)
-    {
-
-        // upload poster
-        if($request->hasFile('file-1'))
-        {
-            $file =  $request['file-1'];
-            $path = public_path().'/uploads/';
-            $file->move($path . '/upload');
-            //Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
-        }
-
-    }
 
     private function getCategories()
     {
