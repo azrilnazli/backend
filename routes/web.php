@@ -32,6 +32,8 @@ Route::post('/videos/store_poster/{id}', [App\Http\Controllers\VideoController::
 
 Route::get('/videos/trailer/{id}', [App\Http\Controllers\VideoController::class, 'trailer'])->name('videos.trailer');
 Route::post('/videos/store_trailer/{id}', [App\Http\Controllers\VideoController::class, 'store_trailer'])->name('videos.store_trailer');
+Route::get('/videos/upload/{id}', [App\Http\Controllers\VideoController::class, 'upload'])->name('videos.upload');
+Route::post('/videos/store_trailer_ajax/{id}', [App\Http\Controllers\VideoController::class, 'store_trailer_ajax'])->name('videos.store_trailer_ajax');
 
 Route::get('/videos/video/{id}', [App\Http\Controllers\VideoController::class, 'video'])->name('videos.video');
 Route::post('/videos/store_video/{id}', [App\Http\Controllers\VideoController::class, 'store_video'])->name('videos.store_video');

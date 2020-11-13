@@ -29,9 +29,6 @@ class VideoController extends Controller
     public function index()
     {
         // Video Listing
-
-
-        
         $data = Video::orderBy('id','desc')->with('category')->paginate(10)->setPath('videos');
         //$data = Video::all()->paginate('10');
         return view('admin.videos.index',compact('data'));
@@ -200,6 +197,40 @@ class VideoController extends Controller
     }
 
 
+    public function upload($id)
+    {
+        $data = Video::find($id);
+        return view('admin.videos.upload',compact(['data']));
+    }
+
+
+    public function store_trailer_ajax(Request $request, $id)
+    {
+
+        // upload poster
+        if($request->hasFile('file'))
+        {
+            $file =  $request['file'];
+            $path = public_path().'/uploads/';
+            $file->move( $path );
+            //Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
+        }
+
+        //dd($request);
+        //return response([
+        //    //'success_url'=> redirect()->intended('/')->getTargetUrl(),
+       //     'success' => true,
+       //     'message'=>'success'
+       // ]);
+
+        $data = [
+            'status' => 'success',
+            'message' => 'hello world',
+        ];
+        return response()->json($data); // Return OK to user's browser
+
+    }
+
     public function store_trailer(Request $request, $id)
     {
  
@@ -279,11 +310,7 @@ class VideoController extends Controller
         return redirect()->route('videos.video', ['id' => $id])->with('success','Video upload success');
     }
 
-    public function upload()
-    {
-        //echo 'test';
-        //return view('admin.videos.upload');    
-    }
+
 
     public function store_upload(Request $request)
     {

@@ -23,6 +23,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "@popperjs/core": "^2.5.4"
+        "@popperjs/core": "^2.5.4",
+        "jquery-simple-upload": "^1.1.0"
     }
 }
