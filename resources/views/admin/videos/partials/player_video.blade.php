@@ -1,7 +1,7 @@
 <script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
-    <div id="playerElement" style="width:100%; height:0; padding:0 0 56.25% 0"></div>
+    <div id="playerElementVideo" style="width:100%; height:0; padding:0 0 56.25% 0"></div>
     <script type="text/javascript">
-    WowzaPlayer.create("playerElement",
+    WowzaPlayer.create("playerElementVideo",
             {
                 "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
                 "sources":[

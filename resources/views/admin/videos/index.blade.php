@@ -1,10 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js" integrity="sha512-53CQcu9ciJDlqhK7UD8dZZ+TF2PFGZrOngEYM/8qucuQba+a+BXOIRsp9PoMNJI3ZeLMVNIxIfZLbG/CdHI5PA==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tooltip.js/1.3.1/tooltip.min.js" integrity="sha512-ZAFwin0nQNXMJRo329TcU4ZyC+ZgKbnaopq/LH/6j7n9zT7ZVLK5BiSmnqgx7jNiewVLgc04geoE62cNN1D8VQ==" crossorigin="anonymous"></script>
-
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">    
@@ -86,7 +82,7 @@
                                     <a href="{{ route('videos.trailer', $row->id)}}" class="btn-sm btn-secondary"><i class="fas fa-times-circle"></i> Trailer</a>
                                     @endif
 
-                                    @if (file_exists(public_path('/uploads/' .$row->id. '/videos/original.mp4')))
+                                    @if (file_exists(public_path('/uploads/' .$row->id. '/videos/stream.smil')))
                                     <a href="{{ route('videos.video', $row->id)}}" class="btn-sm btn-success"><i class="fas fa-check-circle"></i> Video</a>
                                     @else
                                     <a href="{{ route('videos.video', $row->id)}}" class="btn-sm btn-secondary"><i class="fas fa-times-circle"></i> Video</a>

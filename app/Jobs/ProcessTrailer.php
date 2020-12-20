@@ -46,7 +46,7 @@ class ProcessTrailer implements ShouldQueue
         // encode for 1080p
         $command = "$encoder -i $video  --preset=\"Vimeo YouTube HQ 1080p60\" --output $video_path/1080p.mp4  2>$video_path/1080p.log";
         shell_exec($command);
-        Log::info("1080p done : $this->id");
+        Log::info("1080p done : $`this->id`");
 
         $command = "$encoder -i $video  --preset=\"Vimeo YouTube HQ 720p60\" --output $video_path/720p.mp4 2>$video_path/720p.log";
         shell_exec($command);

@@ -109,7 +109,7 @@
 
 
                 <div class="card">
-              
+                    <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Trailer Video</button></div>
                     <div class="card-body">
                        
                         @if (file_exists(public_path('/uploads/' .$data->id. '/trailer/original.mp4')))

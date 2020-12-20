@@ -33,69 +33,18 @@
                     <dt class="col-sm-2">Created On</dt>
                     <dd class="col-sm-9">  {{ $data->created_at }}</dd>
 
+                    <dt class="col-sm-2">Status</dt>
+                    <dd class="col-sm-9">
+                    @include('admin.videos.partials.video_status')
+                    </dd>
+
                     <dt class="col-sm-2">Trailer</dt>
                     <dd class="col-sm-9"> 
-                                <script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
-                                <div id="playerElement-1" style="width:100%; height:0; padding:0 0 56.25% 0"></div>
-                                <script type="text/javascript">
-                                WowzaPlayer.create("playerElement-1",
-                                        {
-                                            "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
-                                            "sources":[
-                                                        {
-                                                            "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/trailer/smil:stream.smil/playlist.m3u8"
-                                                        },
-                                                    ],
-
-                                            "title":"",
-                                            "description":"",
-                                            "autoPlay":false,
-                                            "mute":false,
-                                            "volume":75,
-                                            @if (file_exists(public_path('/uploads/' .$data->id. '/images/trailer-poster.png')))
-                                                "posterFrameURL":"/uploads/{{ $data->id }}/images/trailer-poster.png",
-                                                "endPosterFrameURL":"/uploads/{{ $data->id }}/images/trailer-poster.png",
-                                                "uiPosterFrameFillMode":"fit"
-                                            @else 
-                                                "posterFrameURL":"/src/poster/trailer-poster.png",
-                                                "endPosterFrameURL":"/src/poster/trailer-poster.png",
-                                                "uiPosterFrameFillMode":"fit"
-                                            @endif   
-                                        }
-                                );
-                            </script>                                
+                    @include('admin.videos.partials.player_trailer', $data)
                     </dd>
                     <dt class="col-sm-2">Video</dt>
                     <dd class="col-sm-9"> 
-
-                    <div id="playerElement-2" style="width:100%; height:0; padding:0 0 56.25% 0"></div>
-                                <script type="text/javascript">
-                                WowzaPlayer.create("playerElement-2",
-                                        {
-                                            "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
-                                            "sources":[
-                                                        {
-                                                            "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/videos/smil:stream.smil/playlist.m3u8"
-                                                        },
-                                                    ],
-
-                                            "title":"",
-                                            "description":"",
-                                            "autoPlay":false,
-                                            "mute":false,
-                                            "volume":75,
-                                            @if (file_exists(public_path('/uploads/' .$data->id. '/images/video-poster.png')))
-                                                "posterFrameURL":"/uploads/{{ $data->id }}/images/video-poster.png",
-                                                "endPosterFrameURL":"/uploads/{{ $data->id }}/images/video-poster.png",
-                                                "uiPosterFrameFillMode":"fit"
-                                            @else 
-                                                "posterFrameURL":"/src/poster/video-poster.png",
-                                                "endPosterFrameURL":"/src/poster/video-poster.png",
-                                                "uiPosterFrameFillMode":"fit"
-                                            @endif   
-                                        }
-                                );
-                            </script>                                
+                    @include('admin.videos.partials.player_video', $data)                
                     </dd>                    
 
                     <dt class="col-sm-2">3:4 Poster</dt>
