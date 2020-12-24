@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class, // Intervention Image Class
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+	Owenoj\LaravelGetId3\GetId3ServiceProvider::class, //GETID3
 
         /*
          * Package Service Providers...
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'GetID3' => Owenoj\LaravelGetId3\GetId3ServiceProvider::class,
 
     ],
 
