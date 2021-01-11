@@ -89,5 +89,13 @@ class ProcessVideo implements ShouldQueue
         // update videos.is_ready = 1
         $data['is_processing'] = 0;
         Video::where('id',$this->id)->update( $data);
+
+
+	# rsync
+	$origin = public_path() . '/uploads/';
+	$s3     = public_path() . '/s3';
+	$command = "/usr/bin/rsync -cavu $origin $s3 ";
+	shell_exec($command);
+	Log::info("RSync to S3 Folder : $this->id");
     }
 }
